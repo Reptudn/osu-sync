@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,9 @@ namespace osu_Sync.Features
     internal class Beatmaps
     {
 
-        public static readonly string url_supporter = "osu://b/";
+        public static int waitTime = 2000; //in ms
+
+        public static readonly string url_supporter = "osu://dl/";
         public static readonly string url_normal = "https://osu.ppy.sh/beatmapsets/"; // id/download?noVideo=1/0
 
         public static bool video = false;
@@ -78,15 +81,23 @@ namespace osu_Sync.Features
 
             foreach(string map in beatmapIDs)
             {
+             
                 //System.Diagnostics.Process.Start();
-                var url = url_supporter + map;
                 var psi = new System.Diagnostics.ProcessStartInfo();
                 psi.UseShellExecute = true;
-                psi.FileName = url;
+                psi.FileName = url_normal + map + "/download?noVideo=1";
                 System.Diagnostics.Process.Start(psi);
-                Thread.Sleep(2000);
+
+                
+                /*
+                WebClient client = new WebClient();
+                string reply = client.DownloadString(url_normal + map + "download?noVideo=1");
+                
+                */
+
+                Thread.Sleep(waitTime);
             }
- 
+
         }
 
         
