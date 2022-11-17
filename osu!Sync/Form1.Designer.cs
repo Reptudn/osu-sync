@@ -38,7 +38,7 @@
             // videoCheckbox
             // 
             this.videoCheckbox.AutoSize = true;
-            this.videoCheckbox.Location = new System.Drawing.Point(12, 183);
+            this.videoCheckbox.Location = new System.Drawing.Point(12, 114);
             this.videoCheckbox.Name = "videoCheckbox";
             this.videoCheckbox.Size = new System.Drawing.Size(113, 19);
             this.videoCheckbox.TabIndex = 0;
@@ -75,7 +75,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(365, 214);
+            this.ClientSize = new System.Drawing.Size(365, 140);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.scanBeatmaps);
             this.Controls.Add(this.videoCheckbox);
