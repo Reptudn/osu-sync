@@ -17,6 +17,7 @@ namespace osu_Sync.Features
 
         public static readonly string url_supporter = "osu://dl/";
         public static readonly string url_normal = "https://osu.ppy.sh/beatmapsets/"; // id/download?noVideo=1/0
+        public static readonly string url_normal_end = "/download?noVideo=1";
 
         public static bool video = false;
 
@@ -79,25 +80,29 @@ namespace osu_Sync.Features
         public void DownloadBeatmaps(string[] beatmapIDs)
         {
 
+            MessageBox.Show("Don't work yet", "WORK IN PROGRESS", MessageBoxButtons.OK);
+            
+            /*
             foreach(string map in beatmapIDs)
             {
              
                 //System.Diagnostics.Process.Start();
                 var psi = new System.Diagnostics.ProcessStartInfo();
                 psi.UseShellExecute = true;
-                psi.FileName = url_normal + map + "/download?noVideo=1";
+                psi.FileName = url_normal + map + url_normal_end;
                 System.Diagnostics.Process.Start(psi);
 
                 
-                /*
+
                 WebClient client = new WebClient();
                 string reply = client.DownloadString(url_normal + map + "download?noVideo=1");
                 
-                */
+          
 
                 Thread.Sleep(waitTime);
             }
 
+            */
         }
 
         
