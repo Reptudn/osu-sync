@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,6 +25,7 @@ namespace osu_Sync.Features
 
         public Beatmaps(string path)
         {
+            if (path == null) return;
             this.path = path;
             folders = Directory.GetDirectories(path, "*", SearchOption.TopDirectoryOnly);
         }
@@ -34,8 +36,13 @@ namespace osu_Sync.Features
             foreach(var dir in folders)
             {
                 string map = dir.Substring(path.Length);
-                map = map.Split(" ")[0];
-                maps.Add(map);
+
+                if (!dir.StartsWith("beatmap"))
+                {
+                    map = map.Split(" ")[0];
+                    maps.Add(map + ",");
+                }
+  
             }
 
             Console.WriteLine(maps);
@@ -48,8 +55,8 @@ namespace osu_Sync.Features
 
         private void WriteFile()
         {
-            string save = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\osu_Sync_" + Utils.Time.GetCurrentTime();
-            save.Replace(":", "_");
+            string save = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\osu_Sync.osusync";
+            //save.Replace(":", "_");
 
             if(File.Exists(save)) File.Delete(save);
 
@@ -57,32 +64,32 @@ namespace osu_Sync.Features
             {
                 foreach(string beatmap in maps)
                 {
-                    Byte[] data = new UTF8Encoding(true).GetBytes(beatmap);
+                    Byte[] data = new UTF8Encoding(true).GetBytes(beatmap.Substring(1));
                     fs.Write(data);
                 }
                 
             }
+
+            MessageBox.Show("File saved to the Documents folder", "Songs scanned! (" + maps.Count + ")", MessageBoxButtons.OK);
         }
 
-        public void DownloadBeatmaps()
+        public void DownloadBeatmaps(string[] beatmapIDs)
         {
 
-            foreach(string map in maps)
+            foreach(string map in beatmapIDs)
             {
-                System.Diagnostics.Process.Start(url_supporter + map);
+                //System.Diagnostics.Process.Start();
+                var url = url_supporter + map;
+                var psi = new System.Diagnostics.ProcessStartInfo();
+                psi.UseShellExecute = true;
+                psi.FileName = url;
+                System.Diagnostics.Process.Start(psi);
+                Thread.Sleep(2000);
             }
  
         }
 
-        private void SupporterDownload()
-        {
-
-        }
-
-        private void CasualDownload()
-        {
-
-        }
+        
 
     }
 }
